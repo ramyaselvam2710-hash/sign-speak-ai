@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Instructions - Sign Speak AI</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+
+/* ================= BACKGROUND ================= */
+
+body{
+    min-height:100vh;
+
+    padding:40px 20px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    color:white;
+
+    background:
+    linear-gradient(
+        rgba(3,8,35,0.82),
+        rgba(18,5,45,0.88)
+    ),
+    url("{{ url_for('static', filename='images/instruction_ai.png') }}");
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+}
+
+
+/* ================= MAIN CONTAINER ================= */
+
+.container{
+
+    width:90%;
+    max-width:1000px;
+
+    padding:35px;
+
+    text-align:center;
+
+    background:rgba(10,20,55,0.82);
+
+    backdrop-filter:blur(18px);
+
+    -webkit-backdrop-filter:blur(18px);
+
+    border:1px solid rgba(120,180,255,0.35);
+
+    border-radius:25px;
+
+    box-shadow:
+        0 10px 40px rgba(0,0,0,0.55),
+        0 0 25px rgba(80,100,255,0.15);
+}
+
+
+/* ================= TITLE ================= */
+
+h1{
+
+    color:#7de3ff;
+
+    font-size:38px;
+
+    margin-bottom:12px;
+
+    text-shadow:0 0 15px rgba(100,210,255,0.6);
+
+}
+
+
+.subtitle{
+
+    color:#d8e8ff;
+
+    font-size:18px;
+
+    margin-bottom:25px;
+
+}
+
+
+/* ================= INSTRUCTIONS ================= */
+
+.instructions{
+
+    text-align:left;
+
+    margin-top:20px;
+
+}
+
+
+/* ================= EACH INSTRUCTION ================= */
+
+.instruction{
+
+    background:rgba(255,255,255,0.06);
+
+    padding:18px 20px;
+
+    margin:12px 0;
+
+    border-radius:14px;
+
+    font-size:17px;
+
+    line-height:1.6;
+
+    color:#eaf3ff;
+
+    border:1px solid rgba(255,255,255,0.10);
+
+    transition:0.3s;
+
+}
+
+
+.instruction:hover{
+
+    transform:translateX(5px);
+
+    background:rgba(0,150,255,0.13);
+
+    border:1px solid rgba(100,210,255,0.35);
+
+}
+
+
+.instruction b{
+
+    color:#8de5ff;
+
+}
+
+
+/* ================= HEADINGS ================= */
+
+h2{
+
+    margin-top:35px;
+
+    margin-bottom:12px;
+
+    color:#9cecff;
+
+    font-size:25px;
+
+    text-shadow:0 0 12px rgba(100,210,255,0.4);
+
+}
+
+
+p{
+
+    color:#d5e2f5;
+
+    font-size:17px;
+
+    line-height:1.6;
+
+}
+
+
+/* ================= IMAGES ================= */
+
+.reference-img{
+
+    width:90%;
+
+    max-width:800px;
+
+    display:block;
+
+    margin:25px auto;
+
+    border-radius:15px;
+
+    border:1px solid rgba(120,200,255,0.25);
+
+    box-shadow:0 8px 25px rgba(0,0,0,0.35);
+
+}
+
+
+.gesture-img{
+
+    width:100%;
+
+    max-width:1000px;
+
+    display:block;
+
+    margin:25px auto;
+
+    border-radius:15px;
+
+    border:1px solid rgba(120,200,255,0.25);
+
+    box-shadow:0 8px 25px rgba(0,0,0,0.35);
+
+}
+
+
+/* ================= CONTINUE BUTTON ================= */
+
+.continue-btn{
+
+    display:inline-block;
+
+    margin-top:30px;
+
+    padding:15px 35px;
+
+    background:linear-gradient(
+        90deg,
+        #008cff,
+        #6a35d9
+    );
+
+    color:white;
+
+    text-decoration:none;
+
+    border-radius:12px;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    transition:0.3s;
+
+    box-shadow:0 5px 20px rgba(0,100,255,0.35);
+
+}
+
+
+.continue-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 8px 30px rgba(80,100,255,0.6);
+
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:700px){
+
+    body{
+        padding:20px 10px;
+    }
+
+    .container{
+        width:100%;
+        padding:22px 15px;
+    }
+
+    h1{
+        font-size:28px;
+    }
+
+    h2{
+        font-size:21px;
+    }
+
+    .instruction{
+        font-size:15px;
+        padding:15px;
+    }
+
+    .subtitle,
+    p{
+        font-size:15px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<!-- ================= TITLE ================= -->
+
+<h1>🤟 Sign Speak AI</h1>
+
+
+<!-- ================= LANGUAGE TITLE ================= -->
+
+{% if language == "ta" %}
+
+<p class="subtitle">
+    📖 Sign Speak AI-ஐ எப்படி பயன்படுத்துவது
+</p>
+
+{% else %}
+
+<p class="subtitle">
+    📖 How to Use Sign Speak AI
+</p>
+
+{% endif %}
+
+
+<!-- ================= INSTRUCTIONS ================= -->
+
+<div class="instructions">
+
+
+{% if language == "ta" %}
+
+
+<div class="instruction">
+    📷 <b>1. கேமரா அனுமதியை வழங்கவும்</b><br>
+    கேட்கப்படும் போது கேமராவை பயன்படுத்த அனுமதி வழங்கவும்.
+</div>
+
+
+<div class="instruction">
+    💡 <b>2. நல்ல வெளிச்சத்தை பயன்படுத்தவும்</b><br>
+    உங்கள் கை தெளிவாக தெரியும் வகையில் நல்ல வெளிச்சம் இருக்க வேண்டும்.
+</div>
+
+
+<div class="instruction">
+    ✋ <b>3. உங்கள் கையை தெளிவாக காட்டவும்</b><br>
+    கேமரா frame-க்குள் உங்கள் கையை வைத்திருக்கவும்.
+</div>
+
+
+<div class="instruction">
+    ⏳ <b>4. Gesture-ஐ நிலையாக வைத்திருக்கவும்</b><br>
+    Gesture-ஐ சில விநாடிகள் நிலையாக வைத்திருக்கவும்.
+</div>
+
+
+<div class="instruction">
+    🔤 <b>5. Alphabet Mode</b><br>
+    A–Z எழுத்துகளை கண்டறிய ASL கை சைகைகளை பயன்படுத்தவும்.
+</div>
+
+
+<div class="instruction">
+    🤟 <b>6. Gesture Mode</b><br>
+    Supported hand gestures-ஐ பயன்படுத்தி Sign-களை
+    Text மற்றும் Voice-ஆக மாற்றலாம்.
+</div>
+
+
+{% else %}
+
+
+<div class="instruction">
+    📷 <b>1. Allow Camera Permission</b><br>
+    Allow camera access when requested.
+</div>
+
+
+<div class="instruction">
+    💡 <b>2. Use Good Lighting</b><br>
+    Make sure your hand is clearly visible.
+</div>
+
+
+<div class="instruction">
+    ✋ <b>3. Show Your Hand Clearly</b><br>
+    Keep your hand inside the camera frame.
+</div>
+
+
+<div class="instruction">
+    ⏳ <b>4. Hold the Gesture</b><br>
+    Keep the gesture steady for a few seconds.
+</div>
+
+
+<div class="instruction">
+    🔤 <b>5. Alphabet Mode</b><br>
+    Use ASL hand signs to detect A–Z letters.
+</div>
+
+
+<div class="instruction">
+    🤟 <b>6. Gesture Mode</b><br>
+    Use supported hand gestures to convert signs into
+    text and voice.
+</div>
+
+
+{% endif %}
+
+</div>
+
+
+<!-- ================= ASL ALPHABET ================= -->
+
+{% if language == "ta" %}
+
+<h2>🔤 ASL எழுத்து குறிப்பு</h2>
+
+<p>
+    Alphabet Mode பயன்படுத்தும்போது இந்த A–Z chart-ஐ
+    reference-ஆக பயன்படுத்தவும்.
+</p>
+
+{% else %}
+
+<h2>🔤 ASL Alphabet Reference</h2>
+
+<p>
+    Use this A–Z chart as a reference while using Alphabet Mode.
+</p>
+
+{% endif %}
+
+
+<img src="{{ url_for('static', filename='images/asl_alphabet.png') }}"
+     alt="ASL Alphabet A to Z"
+     class="reference-img">
+
+
+<!-- ================= GESTURE MODE ================= -->
+
+{% if language == "ta" %}
+
+<h2>🤟 Gesture Mode குறிப்பு</h2>
+
+<p>
+    Gesture Mode-ல் supported gestures-ஐ பயன்படுத்தி
+    English மற்றும் Tamil Text மற்றும் Voice-ஆக மாற்றலாம்.
+</p>
+
+{% else %}
+
+<h2>🤟 Gesture Mode Reference</h2>
+
+<p>
+    Use these supported gestures in Gesture Mode to convert
+    signs into English and Tamil text and voice.
+</p>
+
+{% endif %}
+
+
+<img src="{{ url_for('static', filename='images/gesture_mode.png') }}"
+     alt="Gesture Mode Supported Signs"
+     class="gesture-img">
+
+
+<!-- ================= CONTINUE BUTTON ================= -->
+
+{% if language == "ta" %}
+
+<a href="/dashboard" class="continue-btn">
+    ➡️ டாஷ்போர்டுக்கு செல்லவும்
+</a>
+
+{% else %}
+
+<a href="/dashboard" class="continue-btn">
+    ➡️ Continue to Dashboard
+</a>
+
+{% endif %}
+
+
+</div>
+
+</body>
+</html>

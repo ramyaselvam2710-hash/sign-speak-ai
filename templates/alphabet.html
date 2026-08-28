@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>
+{% if language == 'ta' %}
+சைகை எழுத்து முறை - Sign Speak AI
+{% else %}
+ASL Alphabet Mode - Sign Speak AI
+{% endif %}
+</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    padding:30px;
+
+    background:
+        linear-gradient(
+            rgba(3,8,35,0.72),
+            rgba(20,5,55,0.72)
+        ),
+        url("{{ url_for('static', filename='images/dashboard_ai.png') }}");
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+
+    color:white;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    max-width:1400px;
+    margin:0 auto 25px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:18px 25px;
+
+    background:rgba(255,255,255,0.10);
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:18px;
+
+    box-shadow:0 8px 30px rgba(0,0,0,0.35);
+}
+
+.header h1{
+    font-size:30px;
+    color:white;
+
+    text-shadow:
+        0 0 15px rgba(100,210,255,0.8);
+}
+
+.dashboard-btn{
+    padding:12px 22px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00b4db,
+            #377dff
+        );
+
+    color:white;
+    text-decoration:none;
+
+    border-radius:10px;
+    font-weight:bold;
+
+    transition:0.3s;
+}
+
+.dashboard-btn:hover{
+    transform:translateY(-2px);
+}
+
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.main-container{
+    max-width:1400px;
+    margin:auto;
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+
+    gap:25px;
+    align-items:start;
+}
+
+
+/* =========================
+   CAMERA SECTION
+========================= */
+
+.camera-section{
+    padding:20px;
+
+    background:rgba(10,20,65,0.65);
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:22px;
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,0.45);
+}
+
+.camera-title{
+    font-size:23px;
+    margin-bottom:15px;
+
+    color:#7de3ff;
+}
+
+.camera-section img{
+    width:100%;
+    display:block;
+
+    border-radius:15px;
+
+    border:
+        2px solid rgba(100,220,255,0.7);
+
+    box-shadow:
+        0 5px 25px rgba(0,150,255,0.25);
+}
+
+
+/* =========================
+   RIGHT SIDE
+========================= */
+
+.info-section{
+    width:100%;
+}
+
+.box{
+    padding:25px;
+
+    background:rgba(10,20,65,0.70);
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:22px;
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,0.45);
+}
+
+
+/* =========================
+   TITLES
+========================= */
+
+.conversation-title{
+    color:#7de3ff;
+    font-size:26px;
+
+    margin-bottom:20px;
+}
+
+.detected-title{
+    color:#a8ffcc;
+    margin-bottom:10px;
+}
+
+
+/* =========================
+   DETECTED LETTER
+========================= */
+
+#letter{
+    text-align:center;
+
+    font-size:70px;
+    font-weight:bold;
+
+    color:#7de3ff;
+
+    padding:15px;
+    margin-bottom:15px;
+
+    border-radius:15px;
+
+    background:rgba(0,150,255,0.12);
+
+    border:
+        1px solid rgba(100,220,255,0.3);
+
+    text-shadow:
+        0 0 20px rgba(0,200,255,0.8);
+}
+
+
+/* =========================
+   MESSAGE CARDS
+========================= */
+
+.message{
+    padding:20px;
+    margin:15px 0;
+
+    border-radius:18px;
+
+    font-size:18px;
+    line-height:1.6;
+
+    border:
+        1px solid rgba(255,255,255,0.15);
+}
+
+.left{
+    background:rgba(0,150,255,0.15);
+
+    border-left:
+        4px solid #00b4db;
+}
+
+.right{
+    background:rgba(130,70,255,0.18);
+
+    border-right:
+        4px solid #9b59ff;
+
+    text-align:right;
+}
+
+
+/* =========================
+   LETTER / WORD
+========================= */
+
+#letterText{
+    font-size:28px;
+    font-weight:bold;
+
+    color:white;
+}
+
+#wordText{
+    font-size:25px;
+    font-weight:bold;
+
+    color:#7de3ff;
+}
+
+
+/* =========================
+   SAVE HISTORY BUTTON
+========================= */
+
+.save-history-btn{
+    width:100%;
+
+    padding:14px;
+    margin-top:18px;
+
+    border:none;
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00c853,
+            #00a86b
+        );
+
+    color:white;
+
+    font-size:17px;
+    font-weight:bold;
+
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.save-history-btn:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(0,200,100,0.35);
+}
+
+
+/* =========================
+   NORMAL PERSON
+========================= */
+
+#normalReply{
+    font-size:23px;
+    font-weight:bold;
+}
+
+#normalReplyTamil{
+    font-size:21px;
+    color:#d8c8ff;
+}
+
+
+/* =========================
+   REPLY
+========================= */
+
+.reply-title{
+    margin-top:25px;
+    color:#7de3ff;
+}
+
+.reply-box textarea{
+    width:100%;
+    height:100px;
+
+    padding:15px;
+    margin-top:10px;
+
+    border-radius:14px;
+
+    border:
+        1px solid rgba(100,210,255,0.7);
+
+    background:
+        rgba(255,255,255,0.12);
+
+    color:white;
+
+    outline:none;
+    resize:none;
+
+    font-size:17px;
+}
+
+.reply-box textarea::placeholder{
+    color:#d4e5ff;
+}
+
+
+/* =========================
+   BUTTON GRID
+========================= */
+
+.button-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+
+    gap:12px;
+    margin-top:15px;
+}
+
+.reply-box button{
+    padding:13px;
+
+    border:none;
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00b4db,
+            #377dff
+        );
+
+    color:white;
+
+    font-size:16px;
+    font-weight:bold;
+
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.reply-box button:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(0,150,255,0.35);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:900px){
+
+    body{
+        padding:15px;
+    }
+
+    .main-container{
+        grid-template-columns:1fr;
+    }
+
+    .header h1{
+        font-size:23px;
+    }
+
+    .dashboard-btn{
+        padding:10px 15px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<div class="header">
+
+    <h1>
+
+        {% if language == 'ta' %}
+            🔤 சைகை எழுத்து முறை
+        {% else %}
+            🔤 ASL Alphabet Mode
+        {% endif %}
+
+    </h1>
+
+
+    <a
+        href="{{ url_for('dashboard') }}"
+        class="dashboard-btn"
+    >
+
+        {% if language == 'ta' %}
+            🏠 டாஷ்போர்டு
+        {% else %}
+            🏠 Dashboard
+        {% endif %}
+
+    </a>
+
+</div>
+
+
+
+<!-- =========================
+     MAIN CONTAINER
+========================= -->
+
+<div class="main-container">
+
+
+    <!-- =====================
+         CAMERA SECTION
+    ====================== -->
+
+    <div class="camera-section">
+
+        <div class="camera-title">
+
+            {% if language == 'ta' %}
+                📷 நேரடி எழுத்து கண்டறிதல்
+            {% else %}
+                📷 Live Alphabet Detection
+            {% endif %}
+
+        </div>
+
+
+        <img
+            src="{{ url_for('video_alphabet_feed') }}"
+            alt="Alphabet Camera"
+        >
+
+    </div>
+
+
+
+    <!-- =====================
+         RIGHT SIDE
+    ====================== -->
+
+    <div class="info-section">
+
+        <div class="box">
+
+
+            <!-- TITLE -->
+
+            <h2 class="conversation-title">
+
+                {% if language == 'ta' %}
+                    💬 எழுத்து உரையாடல்
+                {% else %}
+                    💬 Alphabet Conversation
+                {% endif %}
+
+            </h2>
+
+
+
+            <!-- DETECTED LETTER -->
+
+            <h2 class="detected-title">
+
+                {% if language == 'ta' %}
+                    🔤 கண்டறியப்பட்ட எழுத்து
+                {% else %}
+                    🔤 Detected Letter
+                {% endif %}
+
+            </h2>
+
+
+            <p id="letter">-</p>
+
+
+
+            <!-- ASL LETTER / WORD -->
+
+            <div class="message left">
+
+                <b>
+
+                    {% if language == 'ta' %}
+                        🔤 சைகை எழுத்து
+                    {% else %}
+                        🔤 ASL Letter
+                    {% endif %}
+
+                </b>
+
+
+                <br><br>
+
+
+                <span id="letterText">
+                    Waiting...
+                </span>
+
+
+                <br><br>
+
+
+                <b>
+
+                    {% if language == 'ta' %}
+                        📝 தற்போதைய சொல்
+                    {% else %}
+                        📝 Current Word
+                    {% endif %}
+
+                </b>
+
+
+                <br><br>
+
+
+                <span id="wordText">
+                    Waiting...
+                </span>
+
+                <br><br>
+
+                <b>🤟 Deaf & Mute Person</b>
+
+                <br><br>
+
+                <span id="sentenceText">
+                    Waiting...
+                </span>
+
+
+                <!-- SAVE BUTTON -->
+
+                <button
+                    class="save-history-btn"
+                    onclick="saveAlphabetHistory()"
+                >
+
+                    {% if language == 'ta' %}
+                        💾 வரலாற்றில் சேமி
+                    {% else %}
+                        💾 Save to History
+                    {% endif %}
+
+                </button>
+
+            </div>
+
+
+
+            <!-- NORMAL PERSON -->
+
+            <div class="message right">
+
+                <b>
+
+                    {% if language == 'ta' %}
+                        👤 சாதாரண நபர்
+                    {% else %}
+                        👤 Normal Person
+                    {% endif %}
+
+                </b>
+
+
+                <br><br>
+
+
+                <span id="normalReply">
+
+                    {% if language == 'ta' %}
+                        காத்திருக்கிறது...
+                    {% else %}
+                        Waiting...
+                    {% endif %}
+
+                </span>
+
+
+                <br><br>
+
+
+                <span id="normalReplyTamil">
+                    காத்திருக்கிறது...
+                </span>
+
+            </div>
+
+
+
+            <!-- REPLY -->
+
+            <h2 class="reply-title">
+
+                {% if language == 'ta' %}
+                    💬 உங்கள் பதிலை உள்ளிடவும்
+                {% else %}
+                    💬 Type Your Reply
+                {% endif %}
+
+            </h2>
+
+
+            <div class="reply-box">
+
+                <textarea
+                    id="reply"
+                    placeholder="{% if language == 'ta' %}உங்கள் பதிலை இங்கே உள்ளிடவும்...{% else %}Type your reply here...{% endif %}"
+                ></textarea>
+
+
+                <div class="button-grid">
+
+
+                    <button onclick="sendReply()">
+
+                        {% if language == 'ta' %}
+                            📤 பதில் அனுப்பு
+                        {% else %}
+                            📤 Send Reply
+                        {% endif %}
+
+                    </button>
+
+
+                    <button onclick="speakText()">
+
+                        {% if language == 'ta' %}
+                            🔊 குரல்
+                        {% else %}
+                            🔊 Speak
+                        {% endif %}
+
+                    </button>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+
+/* ================================
+   UPDATE ALPHABET
+================================ */
+
+function updateText(){
+
+    fetch("/alphabet_text")
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        document.getElementById("letter").innerText =
+            data.letter || "-";
+
+        document.getElementById("letterText").innerText =
+            data.letter || "Waiting...";
+
+        document.getElementById("wordText").innerText =
+            data.word || "Waiting...";
+        document.getElementById("sentenceText").innerText =
+            data.sentence || "Waiting...";    
+
+    })
+
+    .catch(error => {
+
+        console.log(
+            "Alphabet text error:",
+            error
+        );
+
+    });
+
+}
+
+
+/* ================================
+   SAVE ALPHABET HISTORY
+================================ */
+
+function saveAlphabetHistory(){
+
+    fetch("/save_alphabet_history", {
+
+        method:"POST"
+
+    })
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        if(data.success){
+
+            alert("✅ Word saved to History!");
+
+            document.getElementById("wordText").innerText =
+                "Waiting...";
+
+        }
+        else{
+
+            alert("⚠️ " + data.message);
+
+        }
+
+    })
+
+    .catch(error => {
+
+        console.log(
+            "Save history error:",
+            error
+        );
+
+        alert("❌ Error saving history!");
+
+    });
+
+}
+
+
+/* ================================
+   NORMAL PERSON REPLY
+================================ */
+
+function updateReply(){
+
+    fetch("/reply_text")
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        document.getElementById("normalReply").innerText =
+            data.reply || "Waiting...";
+
+        document.getElementById("normalReplyTamil").innerText =
+            data.reply_tamil || "காத்திருக்கிறது...";
+
+    })
+
+    .catch(error => {
+
+        console.log(
+            "Reply error:",
+            error
+        );
+
+    });
+
+}
+
+
+/* ================================
+   SPEAK
+================================ */
+
+function speakText(){
+
+    fetch("/speak");
+
+}
+
+
+/* ================================
+   SEND REPLY
+================================ */
+
+function sendReply(){
+
+    let reply =
+        document.getElementById("reply").value;
+
+
+    if(reply.trim() === ""){
+
+        alert("Please enter a reply!");
+
+        return;
+
+    }
+
+
+    fetch("/reply", {
+
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+
+            reply:reply
+
+        })
+
+    })
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        console.log(
+            "Reply sent:",
+            data
+        );
+
+        document.getElementById("reply").value = "";
+
+    })
+
+    .catch(error => {
+
+        console.log(
+            "Reply error:",
+            error
+        );
+
+    });
+
+}
+
+
+/* ================================
+   AUTO UPDATE
+================================ */
+
+setInterval(updateText, 700);
+
+setInterval(updateReply, 700);
+
+
+/* ================================
+   START
+================================ */
+
+updateText();
+
+updateReply();
+
+</script>
+
+
+</body>
+</html>

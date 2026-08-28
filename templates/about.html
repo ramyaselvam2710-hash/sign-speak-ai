@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>
+{% if language == 'ta' %}
+திட்டம் பற்றி - Sign Speak AI
+{% else %}
+About Project - Sign Speak AI
+{% endif %}
+</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+/* ================= BACKGROUND ================= */
+
+body{
+    min-height:100vh;
+    padding:30px;
+
+    background:
+        linear-gradient(
+            rgba(3,8,35,0.78),
+            rgba(20,5,55,0.78)
+        ),
+        url("{{ url_for('static', filename='images/dashboard_ai.png') }}");
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+
+    color:white;
+}
+
+/* ================= MAIN BOX ================= */
+
+.box{
+    max-width:1000px;
+    margin:auto;
+
+    padding:35px;
+
+    background:rgba(10,20,65,0.75);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,0.18);
+
+    border-radius:25px;
+
+    box-shadow:0 15px 45px rgba(0,0,0,0.55);
+}
+
+/* ================= TITLE ================= */
+
+h1{
+    text-align:center;
+
+    font-size:42px;
+
+    margin-bottom:30px;
+
+    color:white;
+
+    text-shadow:0 0 20px rgba(100,210,255,0.8);
+}
+
+/* ================= SECTION CARDS ================= */
+
+.section{
+    background:rgba(255,255,255,0.08);
+
+    border:1px solid rgba(255,255,255,0.12);
+
+    padding:22px;
+
+    margin:20px 0;
+
+    border-radius:18px;
+
+    transition:0.3s;
+}
+
+.section:hover{
+    transform:translateY(-4px);
+
+    background:rgba(0,150,255,0.14);
+
+    box-shadow:0 8px 25px rgba(0,100,255,0.18);
+}
+
+h2{
+    color:#7de3ff;
+
+    margin-bottom:12px;
+
+    font-size:25px;
+
+    text-shadow:0 0 10px rgba(0,180,255,0.4);
+}
+
+p,
+li{
+    font-size:18px;
+
+    line-height:1.7;
+
+    color:#eef6ff;
+}
+
+ul{
+    padding-left:25px;
+}
+
+li{
+    margin:8px 0;
+}
+
+/* ================= DASHBOARD BUTTON ================= */
+
+.btn{
+    display:block;
+
+    width:240px;
+
+    margin:30px auto 0;
+
+    padding:15px;
+
+    text-align:center;
+
+    background:linear-gradient(
+        90deg,
+        #00b4db,
+        #377dff,
+        #8b35e8
+    );
+
+    color:white;
+
+    text-decoration:none;
+
+    border-radius:12px;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    transition:0.3s;
+
+    box-shadow:0 8px 25px rgba(0,120,255,0.35);
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+
+    box-shadow:0 12px 30px rgba(100,80,255,0.6);
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:700px){
+
+    body{
+        padding:15px;
+    }
+
+    .box{
+        padding:22px;
+    }
+
+    h1{
+        font-size:32px;
+    }
+
+    h2{
+        font-size:22px;
+    }
+
+    p,
+    li{
+        font-size:16px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+    <h1>🤟 Sign Speak AI</h1>
+
+
+    <!-- PROJECT DESCRIPTION -->
+
+    <div class="section">
+
+        <h2>
+            {% if language == 'ta' %}
+                📌 திட்ட விளக்கம்
+            {% else %}
+                📌 Project Description
+            {% endif %}
+        </h2>
+
+        <p>
+            {% if language == 'ta' %}
+                Sign Speak AI என்பது செயற்கை நுண்ணறிவை அடிப்படையாகக் கொண்ட
+                ஒரு பயன்பாடாகும். இது சைகை மொழி கை அசைவுகளை உரை மற்றும்
+                குரலாக மாற்றுகிறது. இது காது கேளாத மற்றும் பேச முடியாத
+                நபர்கள் மற்றவர்களுடன் எளிதாக தொடர்பு கொள்ள உதவுகிறது.
+            {% else %}
+                Sign Speak AI is an AI-based application that converts
+                sign language gestures into text and voice output.
+                It helps Deaf and Mute people communicate easily
+                with normal people.
+            {% endif %}
+        </p>
+
+    </div>
+
+
+    <!-- OBJECTIVE -->
+
+    <div class="section">
+
+        <h2>
+            {% if language == 'ta' %}
+                🎯 நோக்கம்
+            {% else %}
+                🎯 Objective
+            {% endif %}
+        </h2>
+
+        <ul>
+
+            {% if language == 'ta' %}
+
+                <li>செயற்கை நுண்ணறிவைப் பயன்படுத்தி கை சைகைகளை கண்டறிதல்.</li>
+                <li>சைகை மொழியை ஆங்கிலம் மற்றும் தமிழ் உரையாக மாற்றுதல்.</li>
+                <li>சிறந்த தகவல் தொடர்புக்காக குரல் வெளியீட்டை வழங்குதல்.</li>
+                <li>உரையாடல் வரலாற்றை சேமித்தல்.</li>
+
+            {% else %}
+
+                <li>Recognize hand gestures using Artificial Intelligence.</li>
+                <li>Convert sign language into English and Tamil text.</li>
+                <li>Provide voice output for better communication.</li>
+                <li>Save conversation history.</li>
+
+            {% endif %}
+
+        </ul>
+
+    </div>
+
+
+    <!-- TECHNOLOGIES -->
+
+    <div class="section">
+
+        <h2>
+            {% if language == 'ta' %}
+                ⚙️ பயன்படுத்தப்பட்ட தொழில்நுட்பங்கள்
+            {% else %}
+                ⚙️ Technologies Used
+            {% endif %}
+        </h2>
+
+        <ul>
+
+            <li>🐍 Python</li>
+            <li>🌐 Flask</li>
+            <li>📷 OpenCV</li>
+            <li>✋ MediaPipe</li>
+            <li>🗄️ SQLite Database</li>
+
+            <li>
+                {% if language == 'ta' %}
+                    💻 HTML, CSS, JavaScript
+                {% else %}
+                    💻 HTML, CSS, JavaScript
+                {% endif %}
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <!-- FEATURES -->
+
+    <div class="section">
+
+        <h2>
+            {% if language == 'ta' %}
+                ✨ அம்சங்கள்
+            {% else %}
+                ✨ Features
+            {% endif %}
+        </h2>
+
+        <ul>
+
+            {% if language == 'ta' %}
+
+                <li>📷 நேரடி கை கண்டறிதல்</li>
+                <li>🤟 சைகையிலிருந்து உரை மாற்றம்</li>
+                <li>🔊 உரையிலிருந்து குரல் மாற்றம்</li>
+                <li>🌐 இருமொழி ஆதரவு – ஆங்கிலம் மற்றும் தமிழ்</li>
+                <li>📜 உரையாடல் வரலாறு</li>
+                <li>💬 மற்ற நபர் பதில் ஆதரவு</li>
+
+            {% else %}
+
+                <li>📷 Live Hand Detection</li>
+                <li>🤟 Sign to Text Conversion</li>
+                <li>🔊 Text to Voice Conversion</li>
+                <li>🌐 Bilingual Support – English & Tamil</li>
+                <li>📜 Conversation History</li>
+                <li>💬 Normal Person Reply Support</li>
+
+            {% endif %}
+
+        </ul>
+
+    </div>
+
+
+    <!-- DASHBOARD BUTTON -->
+
+    <a href="{{ url_for('dashboard') }}" class="btn">
+
+        {% if language == 'ta' %}
+            🏠 டாஷ்போர்டுக்கு திரும்பு
+        {% else %}
+            🏠 Back to Dashboard
+        {% endif %}
+
+    </a>
+
+</div>
+
+</body>
+</html>

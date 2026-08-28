@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Gesture Mode - Sign Speak AI</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+
+/* ================= BACKGROUND ================= */
+
+body{
+    min-height:100vh;
+    padding:30px;
+
+    background:
+        linear-gradient(
+            rgba(3,8,35,0.72),
+            rgba(20,5,55,0.72)
+        ),
+        url("{{ url_for('static', filename='images/dashboard_ai.png') }}");
+
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+
+    color:white;
+}
+
+
+/* ================= HEADER ================= */
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    max-width:1400px;
+    margin:auto auto 25px;
+
+    background:rgba(255,255,255,0.10);
+
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,0.18);
+
+    padding:18px 25px;
+
+    border-radius:18px;
+
+    box-shadow:0 8px 30px rgba(0,0,0,0.35);
+}
+
+
+.header h1{
+    font-size:32px;
+
+    text-shadow:
+        0 0 15px rgba(100,210,255,0.8);
+}
+
+
+/* ================= DASHBOARD BUTTON ================= */
+
+.dashboard-btn{
+
+    padding:12px 22px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00b4db,
+            #377dff
+        );
+
+    color:white;
+
+    text-decoration:none;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    transition:0.3s;
+}
+
+
+.dashboard-btn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+
+/* ================= MAIN LAYOUT ================= */
+
+.main-container{
+
+    max-width:1400px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:25px;
+
+    align-items:start;
+
+}
+
+
+/* ================= CAMERA ================= */
+
+.camera-section{
+
+    background:
+        rgba(10,20,65,0.65);
+
+    backdrop-filter:blur(15px);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.18);
+
+    border-radius:22px;
+
+    padding:20px;
+
+    box-shadow:
+        0 10px 35px
+        rgba(0,0,0,0.45);
+}
+
+
+.camera-title{
+
+    font-size:23px;
+
+    margin-bottom:15px;
+
+    color:#7de3ff;
+
+}
+
+
+.camera-section img{
+
+    width:100%;
+
+    display:block;
+
+    border-radius:15px;
+
+    border:
+        2px solid
+        rgba(100,220,255,0.7);
+
+    box-shadow:
+        0 5px 25px
+        rgba(0,150,255,0.25);
+
+}
+
+
+/* ================= CONVERSATION ================= */
+
+.info-section{
+
+    width:100%;
+
+}
+
+
+.box{
+
+    background:
+        rgba(10,20,65,0.70);
+
+    backdrop-filter:blur(18px);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.18);
+
+    border-radius:22px;
+
+    padding:25px;
+
+    box-shadow:
+        0 10px 35px
+        rgba(0,0,0,0.45);
+
+}
+
+
+.box h2{
+
+    margin-bottom:18px;
+
+}
+
+
+.conversation-title{
+
+    color:#7de3ff;
+
+    font-size:26px;
+
+}
+
+
+/* ================= MESSAGE CARDS ================= */
+
+.message{
+
+    padding:20px;
+
+    margin:15px 0;
+
+    border-radius:18px;
+
+    font-size:18px;
+
+    line-height:1.6;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.15);
+
+}
+
+
+.left{
+
+    background:
+        rgba(0,150,255,0.15);
+
+    border-left:
+        4px solid
+        #00b4db;
+
+}
+
+
+.right{
+
+    background:
+        rgba(130,70,255,0.18);
+
+    border-right:
+        4px solid
+        #9b59ff;
+
+    text-align:right;
+
+}
+
+
+#english{
+
+    font-size:30px;
+
+    font-weight:bold;
+
+    color:#ffffff;
+
+}
+
+
+#tamil{
+
+    font-size:27px;
+
+    font-weight:bold;
+
+    color:#7de3ff;
+
+}
+
+
+#normalReply{
+
+    font-size:24px;
+
+    font-weight:bold;
+
+}
+
+
+#normalReplyTamil{
+
+    font-size:22px;
+
+    color:#d8c8ff;
+
+}
+
+
+/* ================= REPLY ================= */
+
+.reply-title{
+
+    color:#7de3ff;
+
+    margin-top:25px;
+
+}
+
+
+.reply-box textarea{
+
+    width:100%;
+
+    height:100px;
+
+    padding:15px;
+
+    font-size:17px;
+
+    border-radius:14px;
+
+    border:
+        1px solid
+        rgba(100,210,255,0.7);
+
+    outline:none;
+
+    resize:none;
+
+    background:
+        rgba(255,255,255,0.12);
+
+    color:white;
+
+    margin-top:10px;
+
+}
+
+
+.reply-box textarea::placeholder{
+
+    color:#d4e5ff;
+
+}
+
+
+/* ================= BUTTONS ================= */
+
+.button-grid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:12px;
+
+    margin-top:15px;
+
+}
+
+
+.reply-box button{
+
+    padding:13px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00b4db,
+            #377dff
+        );
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+}
+
+
+.reply-box button:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(0,150,255,0.35);
+
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:900px){
+
+    body{
+
+        padding:15px;
+
+    }
+
+
+    .main-container{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .header h1{
+
+        font-size:24px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<div class="header">
+
+
+    <h1>
+
+        🤟 Sign Speak AI
+
+    </h1>
+
+
+    <a href="{{ url_for('dashboard') }}"
+       class="dashboard-btn">
+
+
+        {% if session.get('language', 'en') == 'ta' %}
+
+            🏠 டாஷ்போர்டு
+
+        {% else %}
+
+            🏠 Dashboard
+
+        {% endif %}
+
+
+    </a>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     MAIN CONTAINER
+===================================================== -->
+
+<div class="main-container">
+
+
+
+<!-- =====================================================
+     CAMERA SECTION
+===================================================== -->
+
+<div class="camera-section">
+
+
+    <div class="camera-title">
+
+
+        {% if session.get('language', 'en') == 'ta' %}
+
+            📷 நேரடி சைகை கண்டறிதல்
+
+        {% else %}
+
+            📷 Live Sign Detection
+
+        {% endif %}
+
+
+    </div>
+
+
+    <!-- CAMERA -->
+
+    <img src="{{ url_for('video_feed') }}">
+
+
+</div>
+
+
+
+<!-- =====================================================
+     CONVERSATION SECTION
+===================================================== -->
+
+<div class="info-section">
+
+
+<div class="box">
+
+
+
+    <!-- ================= CONVERSATION TITLE ================= -->
+
+    <h2 class="conversation-title">
+
+
+        {% if session.get('language', 'en') == 'ta' %}
+
+            💬 நேரடி உரையாடல்
+
+        {% else %}
+
+            💬 Live Conversation
+
+        {% endif %}
+
+
+    </h2>
+
+
+
+    <!-- =================================================
+         DEAF PERSON
+    ================================================== -->
+
+    <div class="message left">
+
+
+        <b>
+
+
+            {% if session.get('language', 'en') == 'ta' %}
+
+                🧏 காது கேளாத நபர்
+
+            {% else %}
+
+                🧏 Deaf Person
+
+            {% endif %}
+
+
+        </b>
+
+
+        <br><br>
+
+
+        <!-- ENGLISH DETECTED TEXT -->
+
+        <span id="english">
+
+            Waiting...
+
+        </span>
+
+
+        <br><br>
+
+
+        <!-- TAMIL DETECTED TEXT -->
+
+        <span id="tamil">
+
+            காத்திருக்கிறது...
+
+        </span>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         NORMAL PERSON
+    ================================================== -->
+
+    <div class="message right">
+
+
+        <b>
+
+
+            {% if session.get('language', 'en') == 'ta' %}
+
+                👤 சாதாரண நபர்
+
+            {% else %}
+
+                👤 Normal Person
+
+            {% endif %}
+
+
+        </b>
+
+
+        <br><br>
+
+
+        <!-- ENGLISH REPLY -->
+
+        <span id="normalReply">
+
+            Waiting...
+
+        </span>
+
+
+        <br><br>
+
+
+        <!-- TAMIL REPLY -->
+
+        <span id="normalReplyTamil">
+
+            காத்திருக்கிறது...
+
+        </span>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         REPLY TITLE
+    ================================================== -->
+
+    <h2 class="reply-title">
+
+
+        {% if session.get('language', 'en') == 'ta' %}
+
+            💬 உங்கள் பதிலை உள்ளிடவும்
+
+        {% else %}
+
+            💬 Type Your Reply
+
+        {% endif %}
+
+
+    </h2>
+
+
+
+    <!-- =================================================
+         REPLY BOX
+    ================================================== -->
+
+    <div class="reply-box">
+
+
+
+        <textarea
+            id="reply"
+            placeholder="{% if session.get('language', 'en') == 'ta' %}உங்கள் பதிலை இங்கே உள்ளிடவும்...{% else %}Type your reply here...{% endif %}">
+        </textarea>
+
+
+
+        <!-- =================================================
+             BUTTON GRID
+        ================================================== -->
+
+        <div class="button-grid">
+
+
+
+            <!-- SEND -->
+
+            <button onclick="sendReply()">
+
+
+                {% if session.get('language', 'en') == 'ta' %}
+
+                    📤 பதில் அனுப்பு
+
+                {% else %}
+
+                    📤 Send Reply
+
+                {% endif %}
+
+
+            </button>
+
+
+
+            <!-- SPEAK -->
+
+            <button onclick="speakText()">
+
+
+                {% if session.get('language', 'en') == 'ta' %}
+
+                    🔊 குரல்
+
+                {% else %}
+
+                    🔊 Speak
+
+                {% endif %}
+
+
+            </button>
+
+
+
+            <!-- DELETE -->
+
+            <button onclick="deleteLast()">
+
+
+                {% if session.get('language', 'en') == 'ta' %}
+
+                    ⬅ கடைசியை நீக்கு
+
+                {% else %}
+
+                    ⬅ Delete Last
+
+                {% endif %}
+
+
+            </button>
+
+
+
+            <!-- CLEAR -->
+
+            <button onclick="clearText()">
+
+
+                {% if session.get('language', 'en') == 'ta' %}
+
+                    🗑 அனைத்தையும் அழி
+
+                {% else %}
+
+                    🗑 Clear All
+
+                {% endif %}
+
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+/* =====================================================
+   SIGN TEXT
+===================================================== */
+
+let lastSpokenText = "";
+
+function updateText(){
+
+    fetch("/text")
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        document.getElementById("english").innerHTML =
+            data.english;
+
+        document.getElementById("tamil").innerHTML =
+            data.tamil;
+
+
+        // ==============================
+        // AUTOMATIC BROWSER VOICE
+        // ==============================
+
+        const text = data.english;
+
+        if (
+            text &&
+            text !== "NO HAND" &&
+            text !== "HAND DETECTED" &&
+            text !== "Waiting..." &&
+            text !== lastSpokenText
+        ) {
+
+            lastSpokenText = text;
+
+            window.speechSynthesis.cancel();
+
+            const speech =
+                new SpeechSynthesisUtterance(text);
+
+            speech.lang = "en-US";
+            speech.rate = 0.9;
+            speech.volume = 1;
+
+            window.speechSynthesis.speak(speech);
+        }
+
+    });
+
+}
+
+
+
+/* =====================================================
+   NORMAL PERSON REPLY
+===================================================== */
+
+function updateReply(){
+
+    fetch("/reply_text")
+
+    .then(response => response.json())
+
+    .then(data => {
+
+
+        document.getElementById("normalReply").innerHTML =
+            data.reply;
+
+
+        document.getElementById("normalReplyTamil").innerHTML =
+            data.reply_tamil;
+
+
+    });
+
+}
+
+
+
+/* =====================================================
+   UPDATE EVERY 300ms
+===================================================== */
+
+setInterval(updateText,300);
+
+setInterval(updateReply,300);
+
+
+
+/* =====================================================
+   SPEAK
+===================================================== */
+
+function speakText(){
+
+    const text = document.getElementById("english").innerText;
+
+    if (
+        text &&
+        text !== "Waiting..." &&
+        text !== "NO HAND" &&
+        text !== "HAND DETECTED"
+    ) {
+
+        window.speechSynthesis.cancel();
+
+        const speech = new SpeechSynthesisUtterance(text);
+
+        speech.lang = "en-US";
+        speech.rate = 0.9;
+        speech.volume = 1;
+
+        window.speechSynthesis.speak(speech);
+    }
+}
+
+
+
+/* =====================================================
+   SEND REPLY
+===================================================== */
+
+function sendReply(){
+
+
+    let reply =
+        document.getElementById("reply").value;
+
+
+    fetch("/reply",{
+
+        method:"POST",
+
+
+        headers:{
+
+            "Content-Type":"application/json"
+
+        },
+
+
+        body:JSON.stringify({
+
+            reply:reply
+
+        })
+
+    });
+
+
+}
+
+
+
+/* =====================================================
+   DELETE LAST
+===================================================== */
+
+function deleteLast(){
+
+
+    fetch("/delete_last",{
+
+        method:"POST"
+
+    });
+
+
+}
+
+
+
+/* =====================================================
+   CLEAR ALL
+===================================================== */
+
+function clearText(){
+
+
+    fetch("/clear",{
+
+        method:"POST"
+
+    });
+
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>

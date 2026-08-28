@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="{{ session.get('language', 'en') }}">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>
+{% if session.get('language', 'en') == 'ta' %}
+உரையாடல் வரலாறு - Sign Speak AI
+{% else %}
+Conversation History - Sign Speak AI
+{% endif %}
+</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    padding:30px;
+
+    background:
+        linear-gradient(
+            rgba(3,8,35,0.78),
+            rgba(20,5,55,0.78)
+        ),
+        url("{{ url_for('static', filename='images/dashboard_ai.png') }}");
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+
+    color:white;
+}
+
+
+/* ================= HEADER ================= */
+
+.header{
+    max-width:1400px;
+    margin:0 auto 25px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:18px 25px;
+
+    background:rgba(255,255,255,0.10);
+
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,0.18);
+
+    border-radius:18px;
+
+    box-shadow:0 8px 30px rgba(0,0,0,0.35);
+}
+
+.header h1{
+    font-size:30px;
+
+    text-shadow:0 0 15px rgba(100,210,255,0.8);
+}
+
+
+/* ================= BUTTONS ================= */
+
+.header-buttons{
+    display:flex;
+    gap:12px;
+}
+
+.btn{
+    display:inline-block;
+
+    padding:12px 20px;
+
+    text-decoration:none;
+
+    color:white;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    transition:0.3s;
+}
+
+.home{
+    background:linear-gradient(
+        90deg,
+        #00b4db,
+        #377dff
+    );
+}
+
+.clear{
+    background:linear-gradient(
+        90deg,
+        #ff416c,
+        #ff4b2b
+    );
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+
+    box-shadow:0 8px 20px rgba(0,0,0,0.35);
+}
+
+
+/* ================= HISTORY BOX ================= */
+
+.history-container{
+    max-width:1400px;
+
+    margin:auto;
+
+    padding:25px;
+
+    background:rgba(10,20,65,0.72);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,0.18);
+
+    border-radius:22px;
+
+    box-shadow:0 10px 35px rgba(0,0,0,0.45);
+
+    overflow-x:auto;
+}
+
+
+/* ================= TABLE ================= */
+
+table{
+    width:100%;
+
+    border-collapse:separate;
+
+    border-spacing:0 10px;
+
+    min-width:900px;
+}
+
+th{
+    padding:15px;
+
+    background:rgba(0,150,255,0.25);
+
+    color:#7de3ff;
+
+    font-size:17px;
+
+    text-align:center;
+}
+
+th:first-child{
+    border-radius:12px 0 0 12px;
+}
+
+th:last-child{
+    border-radius:0 12px 12px 0;
+}
+
+td{
+    padding:16px 12px;
+
+    text-align:center;
+
+    background:rgba(255,255,255,0.08);
+
+    border-top:1px solid rgba(255,255,255,0.10);
+
+    border-bottom:1px solid rgba(255,255,255,0.10);
+
+    font-size:16px;
+}
+
+tr{
+    transition:0.3s;
+}
+
+tbody tr:hover td{
+    background:rgba(0,150,255,0.16);
+}
+
+td:first-child{
+    border-radius:12px 0 0 12px;
+}
+
+td:last-child{
+    border-radius:0 12px 12px 0;
+}
+
+
+/* ================= DELETE BUTTON ================= */
+
+.delete-btn{
+
+    display:inline-block;
+
+    background:linear-gradient(
+        90deg,
+        #ff416c,
+        #ff4b2b
+    );
+
+    color:white;
+
+    padding:9px 16px;
+
+    text-decoration:none;
+
+    border-radius:8px;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    transition:0.3s;
+}
+
+.delete-btn:hover{
+
+    transform:scale(1.05);
+
+    box-shadow:0 5px 15px rgba(255,60,60,0.4);
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:700px){
+
+    body{
+        padding:15px;
+    }
+
+    .header{
+        flex-direction:column;
+
+        gap:15px;
+
+        text-align:center;
+    }
+
+    .header h1{
+        font-size:24px;
+    }
+
+    .header-buttons{
+        flex-wrap:wrap;
+
+        justify-content:center;
+    }
+
+    .history-container{
+        padding:15px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<div class="header">
+
+    <h1>
+
+        {% if session.get('language', 'en') == 'ta' %}
+            📜 உரையாடல் வரலாறு
+        {% else %}
+            📜 Conversation History
+        {% endif %}
+
+    </h1>
+
+
+    <div class="header-buttons">
+
+        <!-- DASHBOARD BUTTON -->
+
+        <a href="/dashboard" class="btn home">
+
+            {% if session.get('language', 'en') == 'ta' %}
+                🏠 டாஷ்போர்டு
+            {% else %}
+                🏠 Dashboard
+            {% endif %}
+
+        </a>
+
+
+        <!-- CLEAR HISTORY BUTTON -->
+
+        <a href="/clear_history" class="btn clear">
+
+            {% if session.get('language', 'en') == 'ta' %}
+                🗑️ வரலாற்றை அழி
+            {% else %}
+                🗑️ Clear History
+            {% endif %}
+
+        </a>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= HISTORY TABLE ================= -->
+
+<div class="history-container">
+
+<table>
+
+    <thead>
+
+        <tr>
+
+            <th>ID</th>
+
+            <th>
+
+                {% if session.get('language', 'en') == 'ta' %}
+                    👤 நபர்
+                {% else %}
+                    👤 Person
+                {% endif %}
+
+            </th>
+
+
+            <th>
+
+                {% if session.get('language', 'en') == 'ta' %}
+                    🇬🇧 ஆங்கிலம்
+                {% else %}
+                    🇬🇧 English
+                {% endif %}
+
+            </th>
+
+
+            <th>
+
+                {% if session.get('language', 'en') == 'ta' %}
+                    🇮🇳 தமிழ்
+                {% else %}
+                    🇮🇳 Tamil
+                {% endif %}
+
+            </th>
+
+
+            <th>
+
+                {% if session.get('language', 'en') == 'ta' %}
+                    🕒 நேரம்
+                {% else %}
+                    🕒 Time
+                {% endif %}
+
+            </th>
+
+
+            <th>
+
+                {% if session.get('language', 'en') == 'ta' %}
+                    ⚙️ செயல்
+                {% else %}
+                    ⚙️ Action
+                {% endif %}
+
+            </th>
+
+        </tr>
+
+    </thead>
+
+
+    <tbody>
+
+    {% for row in data %}
+
+        <tr>
+
+            <td>{{ row[0] }}</td>
+
+            <td>{{ row[4] }}</td>
+
+            <td>{{ row[1] }}</td>
+
+            <td>{{ row[2] }}</td>
+
+            <td>{{ row[3] }}</td>
+
+            <td>
+
+                <a href="/delete/{{ row[0] }}"
+                   class="delete-btn">
+
+                    {% if session.get('language', 'en') == 'ta' %}
+                        ❌ அழி
+                    {% else %}
+                        ❌ Delete
+                    {% endif %}
+
+                </a>
+
+            </td>
+
+        </tr>
+
+    {% endfor %}
+
+    </tbody>
+
+</table>
+
+</div>
+
+
+</body>
+</html>

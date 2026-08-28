@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sign Speak AI</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial,sans-serif;
+        }
+
+        body{
+            min-height:100vh;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+
+            background:
+                linear-gradient(
+                    rgba(3,8,35,0.65),
+                    rgba(20,5,55,0.70)
+                ),
+                url("{{ url_for('static', filename='images/dashboard_ai.png') }}");
+
+            background-size:cover;
+            background-position:center;
+            background-repeat:no-repeat;
+
+            overflow:hidden;
+        }
+
+
+        /* GLASS BOX */
+
+        .box{
+            width:90%;
+            max-width:600px;
+
+            text-align:center;
+
+            background:rgba(10,20,65,0.65);
+
+            backdrop-filter:blur(20px);
+            -webkit-backdrop-filter:blur(20px);
+
+            padding:60px 40px;
+
+            border-radius:30px;
+
+            border:1px solid rgba(255,255,255,0.20);
+
+            box-shadow:0 15px 50px rgba(0,0,0,0.6);
+
+            animation:fadeIn 1.5s ease;
+        }
+
+
+        /* LOGO */
+
+        .icon{
+            font-size:80px;
+
+            margin-bottom:20px;
+
+            animation:float 2s ease-in-out infinite;
+
+            filter:drop-shadow(0 0 15px rgba(100,220,255,0.8));
+        }
+
+
+        h1{
+            color:white;
+
+            font-size:48px;
+
+            margin-bottom:15px;
+
+            text-shadow:0 0 20px rgba(100,210,255,0.9);
+        }
+
+
+        p{
+            font-size:21px;
+
+            color:#d8e8ff;
+
+            margin-top:10px;
+        }
+
+
+        /* LOADING CIRCLE */
+
+        .loader{
+            width:70px;
+            height:70px;
+
+            margin:35px auto 20px;
+
+            border:7px solid rgba(255,255,255,0.2);
+
+            border-top:7px solid #00d4ff;
+
+            border-radius:50%;
+
+            animation:spin 1s linear infinite;
+
+            box-shadow:0 0 20px rgba(0,200,255,0.4);
+        }
+
+
+        /* LOADING TEXT */
+
+        .loading-text{
+            color:#7de3ff;
+
+            font-size:19px;
+
+            animation:blink 1.2s infinite;
+        }
+
+
+        /* ANIMATIONS */
+
+        @keyframes spin{
+
+            from{
+                transform:rotate(0deg);
+            }
+
+            to{
+                transform:rotate(360deg);
+            }
+
+        }
+
+
+        @keyframes blink{
+
+            0%,100%{
+                opacity:1;
+            }
+
+            50%{
+                opacity:0.35;
+            }
+
+        }
+
+
+        @keyframes float{
+
+            0%,100%{
+                transform:translateY(0);
+            }
+
+            50%{
+                transform:translateY(-12px);
+            }
+
+        }
+
+
+        @keyframes fadeIn{
+
+            from{
+                opacity:0;
+                transform:scale(0.9);
+            }
+
+            to{
+                opacity:1;
+                transform:scale(1);
+            }
+
+        }
+
+
+        /* MOBILE */
+
+        @media(max-width:600px){
+
+            .box{
+                padding:45px 20px;
+            }
+
+            h1{
+                font-size:36px;
+            }
+
+            .icon{
+                font-size:65px;
+            }
+
+            p{
+                font-size:18px;
+            }
+
+        }
+
+    </style>
+
+
+    <script>
+
+        setTimeout(function(){
+
+            window.location.href="/login";
+
+        },3000);
+
+    </script>
+
+</head>
+
+
+<body>
+
+
+<div class="box">
+
+    <div class="icon">
+        🤟
+    </div>
+
+    <h1>Sign Speak AI</h1>
+
+    <p>
+        Breaking Communication Barriers Through AI
+    </p>
+
+
+    <div class="loader"></div>
+
+
+    <p class="loading-text">
+        Loading Sign Speak AI...
+    </p>
+
+</div>
+
+
+</body>
+
+</html>

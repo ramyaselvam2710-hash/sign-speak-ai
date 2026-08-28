@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sign Speak AI - Login</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+
+        /* =========================
+           AI BACKGROUND
+        ========================= */
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background-image:
+                linear-gradient(
+                    rgba(3, 8, 35, 0.45),
+                    rgba(18, 5, 45, 0.45)
+                ),
+                url("{{ url_for('static', filename='images/login_ai.png') }}");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+            padding: 30px;
+        }
+
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 70px;
+        }
+
+
+        /* =========================
+           LEFT PANEL
+        ========================= */
+
+        .left-panel {
+            width: 50%;
+            color: white;
+
+            text-shadow: 0 3px 15px rgba(0,0,0,0.7);
+        }
+
+
+        .logo-img {
+            width: 330px;
+            height: auto;
+
+            display: block;
+
+            margin-bottom: 25px;
+
+            filter:
+                drop-shadow(0 0 15px rgba(0,180,255,0.7));
+        }
+
+
+        .left-panel h1 {
+            font-size: 58px;
+
+            margin-bottom: 15px;
+
+            letter-spacing: 1px;
+        }
+
+
+        .left-panel h3 {
+            font-weight: normal;
+
+            font-size: 23px;
+
+            line-height: 38px;
+
+            color: #e8eaff;
+        }
+
+
+        .left-text {
+            margin-top: 28px;
+
+            font-size: 21px;
+
+            color: #d8e8ff;
+
+            font-style: italic;
+        }
+
+
+        .quote {
+            margin-top: 35px;
+
+            font-size: 23px;
+
+            font-weight: bold;
+
+            color: #c9f6ff;
+
+            text-shadow:
+                0 0 15px rgba(0, 200, 255, 0.8);
+        }
+
+
+        /* =========================
+           LOGIN GLASS BOX
+        ========================= */
+
+        .login-box {
+
+            width: 430px;
+
+            padding: 40px;
+
+            border-radius: 28px;
+
+            background:
+                rgba(10, 20, 65, 0.55);
+
+            backdrop-filter:
+                blur(18px);
+
+            -webkit-backdrop-filter:
+                blur(18px);
+
+            border:
+                1px solid rgba(120, 200, 255, 0.55);
+
+            box-shadow:
+                0 15px 45px rgba(0,0,0,0.55),
+                0 0 30px rgba(90,80,255,0.25);
+        }
+
+
+        .login-box h2 {
+
+            text-align: center;
+
+            color: white;
+
+            font-size: 32px;
+
+            margin-bottom: 35px;
+
+            text-shadow:
+                0 0 15px rgba(100,150,255,0.7);
+        }
+
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .form-label {
+
+            display: block;
+
+            color: white;
+
+            font-size: 17px;
+
+            margin-top: 15px;
+
+            margin-bottom: 8px;
+        }
+
+
+        input[type=text],
+        input[type=password],
+        select {
+
+            width: 100%;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            outline: none;
+
+            font-size: 16px;
+
+            color: white;
+
+            background:
+                rgba(255,255,255,0.12);
+
+            border:
+                1px solid rgba(255,255,255,0.30);
+
+            margin-bottom: 10px;
+        }
+
+
+        input::placeholder {
+            color: rgba(255,255,255,0.75);
+        }
+
+
+        select {
+            color: white;
+            cursor: pointer;
+        }
+
+
+        select option {
+            background: #111b45;
+            color: white;
+        }
+
+
+        input:focus,
+        select:focus {
+
+            border-color: #54d6ff;
+
+            box-shadow:
+                0 0 12px rgba(84,214,255,0.5);
+        }
+
+
+        /* =========================
+           SHOW PASSWORD
+        ========================= */
+
+        .showpass {
+
+            color: white;
+
+            font-size: 17px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin: 8px 0 25px;
+        }
+
+
+        .showpass input {
+            width: 18px;
+            height: 18px;
+        }
+
+
+        /* =========================
+           BUTTON
+        ========================= */
+
+        button {
+
+            width: 100%;
+
+            padding: 16px;
+
+            border: none;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #00b4db,
+                    #377dff,
+                    #8b35e8
+                );
+
+            color: white;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+
+            box-shadow:
+                0 8px 25px rgba(0,120,255,0.35);
+        }
+
+
+        button:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 12px 30px rgba(100,80,255,0.6);
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .powered {
+
+            margin-top: 22px;
+
+            text-align: center;
+
+            color:
+                rgba(255,255,255,0.85);
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           MOBILE RESPONSIVE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            body {
+                padding: 25px;
+            }
+
+            .container {
+
+                flex-direction: column;
+
+                text-align: center;
+
+                gap: 40px;
+            }
+
+            .left-panel {
+                width: 100%;
+            }
+
+            .login-box {
+                width: 100%;
+                max-width: 430px;
+            }
+
+            .logo-img {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .left-panel h1 {
+                font-size: 45px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- LEFT SIDE -->
+
+    <div class="left-panel">
+
+        <img src="{{ url_for('static', filename='images/logo.png') }}"
+             alt="Sign Speak AI Logo"
+             class="logo-img">
+
+        <h1>Sign Speak AI</h1>
+
+        <h3>
+            Tamil & English Sign Language
+        </h3>
+
+        <h3>
+            to Text and Voice Converter
+        </h3>
+
+        <p class="left-text">
+            Breaking Communication Barriers Through AI
+        </p>
+
+        <p class="quote">
+            💙 Every Gesture Has a Voice
+        </p>
+
+    </div>
+
+
+
+    <!-- LOGIN BOX -->
+
+    <div class="login-box">
+
+        <h2>Welcome Back 👋</h2>
+
+
+        <form method="POST">
+
+
+            <!-- LANGUAGE -->
+
+            <label class="form-label">
+                🌐 Language / மொழி
+            </label>
+
+            <select name="language" required>
+
+                <option value="en">
+                    🇬🇧 English
+                </option>
+
+                <option value="ta">
+                    🇮🇳 தமிழ்
+                </option>
+
+            </select>
+
+
+            <!-- USERNAME -->
+
+            <label class="form-label">
+                👤 Username
+            </label>
+
+            <input type="text"
+                   name="username"
+                   placeholder="Enter your username"
+                   required>
+
+
+            <!-- PASSWORD -->
+
+            <label class="form-label">
+                🔒 Password
+            </label>
+
+            <input type="password"
+                   id="password"
+                   name="password"
+                   placeholder="Enter your password"
+                   required>
+
+
+            <!-- SHOW PASSWORD -->
+
+            <label class="showpass">
+
+                <input type="checkbox"
+                       onclick="showPassword()">
+
+                Show Password
+
+            </label>
+
+
+            <!-- LOGIN BUTTON -->
+
+            <button type="submit">
+
+                🚀 Start Communication
+
+            </button>
+
+
+        </form>
+
+
+        <div class="powered">
+
+            Powered by Artificial Intelligence 🤖
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+    function showPassword() {
+
+        var x = document.getElementById("password");
+
+        if (x.type === "password") {
+
+            x.type = "text";
+
+        } else {
+
+            x.type = "password";
+
+        }
+
+    }
+
+</script>
+
+
+</body>
+
+</html>
