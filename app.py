@@ -123,8 +123,8 @@ hands = mp_hands.Hands(
     static_image_mode=False,
     max_num_hands=1,
     model_complexity=0,
-    min_detection_confidence=0.3,
-    min_tracking_confidence=0.3
+    min_detection_confidence=0.5,
+    min_tracking_confidence=0.5
 )
 
 camera = cv2.VideoCapture(0,cv2.CAP_MSMF)
@@ -831,12 +831,18 @@ def video_alphabet():
         success, frame = camera.read()
 
         if not success:
-            continue
+           print("❌ Camera frame not available")
+           time.sleep(0.1)
+           continue
 
         frame = cv2.flip(frame, 1)
 
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         result = hands.process(rgb)
+        if result.multi_hand_landmarks:
+           print("✅ HAND DETECTED")
+        else:
+            print("❌ NO HAND")
 
         detected_letter = ""
 
