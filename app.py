@@ -131,9 +131,9 @@ hands = mp_hands.Hands(
     min_tracking_confidence=0.3
 )
 
-camera = cv2.VideoCapture(0)
+camera = cv2.VideoCapture(0,cv2.CAP_MSMF)
 
-dataset_file = "dataset.csv"
+dataset_file = "dataset.csv"                                                                                                                                                                                                                                                                                                                                                                                       
 dataset_exists = os.path.isfile(dataset_file)
 collect_letter = "A"
 
@@ -694,6 +694,29 @@ def recognize_letter(lm_list):
     # --------------------------
 # Video Function
 # --------------------------
+def camera_test():
+    while True:
+        success, frame = camera.read()
+
+        if not success:
+            print("CAMERA READ FAILED")
+            continue
+
+        frame = cv2.flip(frame, 1)
+
+        ret, buffer = cv2.imencode(".jpg", frame)
+
+        if not ret:
+            print("JPEG ENCODE FAILED")
+            continue
+
+        yield (
+            b"--frame\r\n"
+            b"Content-Type: image/jpeg\r\n\r\n"
+            + buffer.tobytes()
+            + b"\r\n"
+        )
+
 
 def video():
 
@@ -711,7 +734,11 @@ def video():
         success, frame = camera.read()
 
         if not success:
+            print("❌ CAMERA FRAME READ FAILED")
+            time.sleep(0.1)
             continue
+
+        print("✅ CAMERA FRAME READ SUCCESS")
 
         frame = cv2.flip(frame, 1)
         frame = cv2.resize(frame, (640, 480))
@@ -774,7 +801,7 @@ def video():
                 current_text["english"] = text_en
                 current_text["tamil"] = text_ta
 
-        frame = draw_text(frame, text_en, text_ta)
+       # frame = draw_text(frame, text_en, text_ta)
 
         ret, buffer = cv2.imencode(".jpg", frame)
 
@@ -1091,6 +1118,13 @@ def video_feed():
         video(),
         mimetype="multipart/x-mixed-replace; boundary=frame"
     )
+
+@app.route("/video_test")
+def video_test():
+    return Response(
+        camera_test(),
+        mimetype="multipart/x-mixed-replace; boundary=frame"
+    )    
 
 @app.route("/video_alphabet")
 def video_alphabet_feed():

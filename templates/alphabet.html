@@ -492,10 +492,33 @@ body{
         </div>
 
 
-        <img
-            src="{{ url_for('video_alphabet_feed') }}"
-            alt="Alphabet Camera"
-        >
+        <video
+    id="camera"
+    autoplay
+    playsinline
+    style="width: 100%; max-width: 640px; border-radius: 12px;"
+></video>
+
+<button onclick="startCamera()">
+    📷 Start Camera
+</button>
+
+<script>
+async function startCamera() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: false
+        });
+
+        document.getElementById("camera").srcObject = stream;
+
+    } catch (error) {
+        console.log("Camera Error:", error);
+        alert("Camera permission allow pannunga");
+    }
+}
+</script>
 
     </div>
 
@@ -741,7 +764,14 @@ function updateText(){
         document.getElementById("wordText").innerText =
             data.word || "Waiting...";
         document.getElementById("sentenceText").innerText =
-            data.sentence || "Waiting...";    
+            data.sentence || "Waiting...";  
+            
+        if(data.sentence && data.sentence !== "Waiting..."){
+        speakAlphabetAutomatically(data.sentence);
+        }
+        else if(data.word && data.word !== "Waiting..."){
+        speakAlphabetAutomatically(data.word);
+        }    
 
     })
 
@@ -839,10 +869,43 @@ function updateReply(){
    SPEAK
 ================================ */
 
+let lastSpokenAlphabet = "";
+
+function speakAlphabetAutomatically(text){
+
+    if(
+        !text ||
+        text === "Waiting..." ||
+        text === "காத்திருக்கிறது..." ||
+        text === "-" ||
+        text === lastSpokenAlphabet
+    ){
+        return;
+    }
+
+    lastSpokenAlphabet = text;
+
+    window.speechSynthesis.cancel();
+
+    const speech =
+        new SpeechSynthesisUtterance(text);
+
+    speech.lang = "en-US";
+    speech.rate = 0.9;
+    speech.volume = 1;
+
+    window.speechSynthesis.speak(speech);
+}
+
+
 function speakText(){
 
-    fetch("/speak");
+    const text =
+        document.getElementById("sentenceText").innerText ||
+        document.getElementById("wordText").innerText ||
+        document.getElementById("letterText").innerText;
 
+    speakAlphabetAutomatically(text);
 }
 
 
