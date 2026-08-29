@@ -5,7 +5,6 @@ import time
 last_saved_letter = ""
 last_detect_time = 0
 from gtts import gTTS
-from playsound import playsound
 import threading
 import os
 import csv
@@ -105,9 +104,6 @@ def speak(text, lang="en"):
         tts = gTTS(text=text, lang=lang)
         tts.save(filename)
 
-        playsound(filename)
-
-        os.remove(filename)
 
     except Exception as e:
 
