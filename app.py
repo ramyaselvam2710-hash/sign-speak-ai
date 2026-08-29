@@ -118,8 +118,10 @@ def speak(text, lang="en"):
 # MediaPipe
 # --------------------------
 
-from mediapipe.python.solutions import hands as mp_hands
-from mediapipe.python.solutions import drawing_utils as mp_draw
+import mediapipe as mp
+
+mp_hands = mp.solutions.hands
+mp_draw = mp.solutions.drawing_utils
 
 hands = mp_hands.Hands(
     static_image_mode=False,
